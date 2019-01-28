@@ -8,8 +8,9 @@ import (
 	"golang.org/x/tools/go/ast/inspector"
 )
 
+// Analyzer provides static analysis for layered architecture.
 var Analyzer = &analysis.Analyzer{
-	Name: "lcheck",
+	Name: "importcheck",
 	Doc:  Doc,
 	Run:  run,
 	Requires: []*analysis.Analyzer{
@@ -17,7 +18,8 @@ var Analyzer = &analysis.Analyzer{
 	},
 }
 
-const Doc = "lcheck is ..."
+// Doc writes description this analyzer.
+const Doc = "importcheck is ..."
 
 func run(pass *analysis.Pass) (interface{}, error) {
 	inspect := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
