@@ -1,13 +1,14 @@
-package lcheck_test
+package importcheck_test
 
 import (
 	"testing"
 
-	"github.com/budougumi0617/lcheck/lcheck"
+	"github.com/budougumi0617/importcheck"
 	"golang.org/x/tools/go/analysis/analysistest"
 )
 
 func Test(t *testing.T) {
 	testdata := analysistest.TestData()
-	analysistest.Run(t, testdata, lcheck.Analyzer, "a")
+	// GOPAH is ./testdate in test
+	analysistest.Run(t, testdata, importcheck.Analyzer, "handler")
 }

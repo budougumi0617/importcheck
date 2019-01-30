@@ -1,11 +1,10 @@
-package lcheck
+package importcheck
 
 import (
-	"go/ast"
+	"strings"
 
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/inspect"
-	"golang.org/x/tools/go/ast/inspector"
 )
 
 // Analyzer provides static analysis for layered architecture.
@@ -22,18 +21,17 @@ var Analyzer = &analysis.Analyzer{
 const Doc = "importcheck is ..."
 
 func run(pass *analysis.Pass) (interface{}, error) {
-	inspect := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
-
-	nodeFilter := []ast.Node{
-		(*ast.Ident)(nil),
+	for _, f := range pass.Files {
+		for _, i := range f.Imports {
+			if isRepositoryPkg(i.Path.Value) {
+				pass.Reportf(i.Pos(), "%s must not include %s", f.Name.Name, i.Path.Value)
+			}
+		}
 	}
 
-	inspect.Preorder(nodeFilter, func(n ast.Node) {
-		switch n := n.(type) {
-		case *ast.Ident:
-			_ = n
-		}
-	})
-
 	return nil, nil
+}
+
+func isRepositoryPkg(s string) bool {
+	return strings.HasSuffix(strings.Trim(s, "\""), "repository")
 }
