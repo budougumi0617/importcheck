@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"repository"
-	"service" // want "handler must not include service"
+	"repository" // want "handler must not include \"repository\""
+	"service"
 )
 
 // DeleteHandler is Dummay for test
