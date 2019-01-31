@@ -18,9 +18,13 @@ var Analyzer = &analysis.Analyzer{
 }
 
 // Doc writes description this analyzer.
-const Doc = "importcheck is ..."
+const Doc = "importcheck confirms clean architecture."
 
 func run(pass *analysis.Pass) (interface{}, error) {
+	if pass.Pkg.Name() != "handler" {
+		return nil, nil
+	}
+
 	for _, f := range pass.Files {
 		for _, i := range f.Imports {
 			if isRepositoryPkg(i.Path.Value) {

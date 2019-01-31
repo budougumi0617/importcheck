@@ -9,6 +9,6 @@ import (
 
 func Test(t *testing.T) {
 	testdata := analysistest.TestData()
-	// GOPAH is ./testdate in test
+	// GOPAH is ./testdata in test
 	analysistest.Run(t, testdata, importcheck.Analyzer, "handler")
 }
