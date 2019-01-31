@@ -4,7 +4,6 @@ import (
 	"strings"
 
 	"golang.org/x/tools/go/analysis"
-	"golang.org/x/tools/go/analysis/passes/inspect"
 )
 
 // Analyzer provides static analysis for layered architecture.
@@ -12,9 +11,6 @@ var Analyzer = &analysis.Analyzer{
 	Name: "importcheck",
 	Doc:  Doc,
 	Run:  run,
-	Requires: []*analysis.Analyzer{
-		inspect.Analyzer,
-	},
 }
 
 // Doc writes description this analyzer.
